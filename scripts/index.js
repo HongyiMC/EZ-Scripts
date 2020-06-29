@@ -1,4 +1,6 @@
-import "./attackParticle.js"
 import "./antiXray.js"
+import "./attackParticle.js"
+import "./chatCMD.js"
+import "./customScb.js"
 import "./fun.js"
 import "./playerJoin.js"
