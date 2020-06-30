@@ -20,7 +20,6 @@ system.listenForEvent("minecraft:entity_death", ({data: eventData}) => {
         entity: deadEntity, 
         killer 
     } = eventData;
-    
     const killerName = system.getComponent(killer, "minecraft:nameable").data.name;
     const deadEntityIdentifier = deadEntity.__identifier__.replace("minecraft:", "");
     const player = getPlayerByNAME(killerName);
@@ -44,6 +43,7 @@ system.listenForEvent("minecraft:entity_death", ({data: eventData}) => {
     
     if (deadEntityIdentifier in mobs) {
         updateBalance(player, mobs[deadEntityIdentifier], "add");
+		//console.log("Player " + player.name + " got $" + mobs[deadEntityIdentifier] + " for killing " + deadEntity.__identifier__);
     }
   }
 )
