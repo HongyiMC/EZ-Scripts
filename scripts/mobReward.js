@@ -10,50 +10,34 @@ import {
 const system = server.registerSystem(0, 0);
 
 system.listenForEvent("minecraft:entity_death", ({data: eventData}) => {
-	const { entity, killer }= eventData
-    let deadEntity = entity
-    let killerName = system.getComponent(killer, "minecraft:nameable").data.name;
-	let player = getPlayerByNAME(killerName);
-	//console.log(JSON.stringify(deadEntity));
-	
-    if ("minecraft:zombie" === deadEntity.__identifier__) {
-		updateBalance(player,1,'add')
-    }
-	if ("minecraft:zombie_villager_v2" === deadEntity.__identifier__) {
-		updateBalance(player,1,'add')
-    }
-	if ("minecraft:husk" === deadEntity.__identifier__) {
-		updateBalance(player,1,'add')
-    }
-	if ("minecraft:skeleton" === deadEntity.__identifier__) {
-		updateBalance(player,1,'add')
-    }
-	if ("minecraft:stray" === deadEntity.__identifier__) {
-		updateBalance(player,1,'add')
-    }
-	if ("minecraft:creeper" === deadEntity.__identifier__) {
-		updateBalance(player,1,'add')
-    }
-	if ("minecraft:spider" === deadEntity.__identifier__) {
-		updateBalance(player,1,'add')
-    }
-	if ("minecraft:cave_spider" === deadEntity.__identifier__) {
-		updateBalance(player,1,'add')
-    }
-	if ("minecraft:witch" === deadEntity.__identifier__) {
-		updateBalance(player,2,'add')
-    }
-	if ("minecraft:phantom" === deadEntity.__identifier__) {
-		updateBalance(player,2,'add')
-    }
-	if ("minecraft:blaze" === deadEntity.__identifier__) {
-		updateBalance(player,2,'add')
-    }
-	if ("minecraft:ghast" === deadEntity.__identifier__) {
-		updateBalance(player,3,'add')
-    }
-	if ("minecraft:ender_dragon" === deadEntity.__identifier__) {
-		updateBalance(player,200,'add')
+    const { 
+        entity: deadEntity, 
+        killer 
+    } = eventData;
+    
+    const killerName = system.getComponent(killer, "minecraft:nameable").data.name;
+    const deadEntityIdentifier = deadEntity.__identifier__.replace("minecraft:", "");
+    const player = getPlayerByNAME(killerName);
+    //console.log(JSON.stringify(deadEntity));
+    
+    const mobs = {
+        "zombie" : 1,
+        "zombie_villager_v2" : 1,
+        "husk" : 1,
+        "skeleton" : 1,
+        "stray" : 1,
+        "creeper" : 1,
+        "spider" : 1,
+        "cave_spider" : 1,
+        "witch" : 2,
+        "phantom" : 2,
+        "blaze" : 2,
+        "ghast" : 3,
+        "ender_dragon" : 200
+    };
+    
+    if (deadEntityIdentifier in mobs) {
+        updateBalance(player, mobs[deadEntityIdentifier], "add");
     }
   }
 )
