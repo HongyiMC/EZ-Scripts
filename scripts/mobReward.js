@@ -24,6 +24,7 @@ system.listenForEvent("minecraft:entity_death", ({data: eventData}) => {
 	const killerName = system.getComponent(killer, "minecraft:nameable").data.name;
 	const deadEntityIdentifier = deadEntity.__identifier__.replace("minecraft:", "");
 	const player = getPlayerByNAME(killerName);
+	//console.log(JSON.stringify(deadEntity));
 	
 	const mobs = {
 		"zombie" : randomReward(1,1),
@@ -38,7 +39,9 @@ system.listenForEvent("minecraft:entity_death", ({data: eventData}) => {
 		"phantom" : randomReward(1,2),
 		"blaze" : randomReward(2,2),
 		"ghast" : randomReward(3,3),
-		"ender_dragon" : randomReward(200,200)
+		"ender_dragon" : randomReward(200,200),
+		"piglin" : randomReward(1,3),
+		"zoglin" : randomReward(2,5)
 	};
 	
 	if (deadEntityIdentifier in mobs) {
