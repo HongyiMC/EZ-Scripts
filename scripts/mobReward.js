@@ -1,12 +1,11 @@
 import {
 	getBalance,
-    updateBalance
+	updateBalance
 } from "ez:economy";
 
 import {
     getPlayerByNAME
 } from "ez:player";
-
 
 const system = server.registerSystem(0, 0);
 
