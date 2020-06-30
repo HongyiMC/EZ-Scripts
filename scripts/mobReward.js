@@ -9,6 +9,12 @@ import {
 
 const system = server.registerSystem(0, 0);
 
+function randomReward(min, max) {
+	min = Math.ceil(min);
+	max = Math.floor(max);
+	return Math.floor(Math.random() * (max - min + 1)) + min;
+}
+
 system.listenForEvent("minecraft:entity_death", ({data: eventData}) => {
     const { 
         entity: deadEntity, 
@@ -19,21 +25,21 @@ system.listenForEvent("minecraft:entity_death", ({data: eventData}) => {
     const deadEntityIdentifier = deadEntity.__identifier__.replace("minecraft:", "");
     const player = getPlayerByNAME(killerName);
     //console.log(JSON.stringify(deadEntity));
-    
+	
     const mobs = {
-        "zombie" : 1,
-        "zombie_villager_v2" : 1,
-        "husk" : 1,
-        "skeleton" : 1,
-        "stray" : 1,
-        "creeper" : 1,
-        "spider" : 1,
-        "cave_spider" : 1,
-        "witch" : 2,
-        "phantom" : 2,
-        "blaze" : 2,
-        "ghast" : 3,
-        "ender_dragon" : 200
+        "zombie" : randomReward(1,1),
+        "zombie_villager_v2" : randomReward(1,1),
+        "husk" : randomReward(1,1),
+        "skeleton" : randomReward(1,1),
+        "stray" : randomReward(1,1),
+        "creeper" : randomReward(1,1),
+        "spider" : randomReward(1,1),
+        "cave_spider" : randomReward(1,1),
+        "witch" : randomReward(2,3),
+        "phantom" : randomReward(1,2),
+        "blaze" : randomReward(2,2),
+        "ghast" : randomReward(3,3),
+        "ender_dragon" : randomReward(200,200)
     };
     
     if (deadEntityIdentifier in mobs) {
