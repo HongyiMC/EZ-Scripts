@@ -4,7 +4,7 @@ import {
 } from "ez:economy";
 
 import {
-    getPlayerByNAME
+	getPlayerByNAME
 } from "ez:player";
 
 const system = server.registerSystem(0, 0);
