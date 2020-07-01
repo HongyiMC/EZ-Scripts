@@ -66,12 +66,12 @@ system.listenForEvent("minecraft:entity_death", ({data: eventData}) => {
 			const victimName = getPlayerByNAME(victim);
 			const victimMoney = getBalance(victimName);
 			const result = percentage(victimMoney);
-			const vitimLoot = Math.round(result);
-			const deductVitimLoot = vitimLoot * -1
-			updateBalance(killerName, vitimLoot, "add")
-			system.executeCommand(`title "${killerName.name}" actionbar §fYou earned §e$${vitimLoot} §a(${LootPercentage} Percent) §ffor killing §6${victimName.name}\n§7Previous: §b${moneyOld} §7=> Now: §b${getBalance(killerName)}`, () => {});
-			updateBalance(victimName, deductVitimLoot, "deduct")
-			system.executeCommand(`title "${victimName.name}" actionbar §fYou lost §e$${vitimLoot} §a(${LootPercentage} Percent) §ffor getting killed by §6${victimName.name}\n§7Previous: §b${moneyOld} §7=> Now: §b${getBalance(killerName)}`, () => {});
+			const victimLoot = Math.round(result);
+			const deductVictimLoot = victimLoot * -1
+			updateBalance(killerName, victimLoot, "add")
+			system.executeCommand(`title "${killerName.name}" actionbar §fYou earned §e$${victimLoot} §a(${LootPercentage} Percent) §ffor killing §6${victimName.name}\n§7Previous: §b${moneyOld} §7=> Now: §b${getBalance(killerName)}`, () => {});
+			updateBalance(victimName, deductVictimLoot, "deduct")
+			system.executeCommand(`title "${victimName.name}" actionbar §fYou lost §e$${victimLoot} §a(${LootPercentage} Percent) §ffor getting killed by §6${victimName.name}\n§7Previous: §b${moneyOld} §7=> Now: §b${getBalance(killerName)}`, () => {});
 		}
 		else {
 			let moneyOld = getBalance(killerName)
