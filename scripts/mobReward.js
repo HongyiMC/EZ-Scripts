@@ -13,31 +13,8 @@ const system = server.registerSystem(0, 0);
 function randomReward(min, max) {
 	min = Math.ceil(min);
 	max = Math.floor(max);
-	return Math.floor(Math.random() * (max - min + 1)) + min;
+	return ((Math.random() * (max - min + 1)) | 0) + min;
 }
-
-//customize the percentage of player losing money when get killed by another player
-let LootPercentage = 5
-
-//customize how much money should a mob drop (min, max)
-const mobs = {
-	"zombie" : randomReward(1,1),
-	"zombie_villager_v2" : randomReward(1,1),
-	"husk" : randomReward(1,1),
-	"skeleton" : randomReward(1,1),
-	"stray" : randomReward(1,1),
-	"creeper" : randomReward(1,1),
-	"spider" : randomReward(1,1),
-	"cave_spider" : randomReward(1,1),
-	"witch" : randomReward(2,3),
-	"phantom" : randomReward(1,2),
-	"blaze" : randomReward(2,2),
-	"ghast" : randomReward(3,3),
-	"ender_dragon" : randomReward(200,200),
-	"piglin" : randomReward(1,3),
-	"zoglin" : randomReward(2,5),
-	"player" : randomReward(1,1)
-};
 
 function percentage(num){
 	if (LootPercentage > 100) {
@@ -50,7 +27,30 @@ function percentage(num){
 	}
 }
 
+//customize the percentage of player losing money when get killed by another player
+let LootPercentage = 5
+
 system.listenForEvent("minecraft:entity_death", ({data: eventData}) => {
+	//customize how much money should a mob drop (min, max)
+	const mobs = {
+		"zombie" : randomReward(1,1),
+		"zombie_villager_v2" : randomReward(1,1),
+		"husk" : randomReward(1,1),
+		"skeleton" : randomReward(1,1),
+		"stray" : randomReward(1,1),
+		"creeper" : randomReward(1,1),
+		"spider" : randomReward(1,1),
+		"cave_spider" : randomReward(1,1),
+		"witch" : randomReward(2,3),
+		"phantom" : randomReward(1,2),
+		"blaze" : randomReward(2,2),
+		"ghast" : randomReward(3,3),
+		"ender_dragon" : randomReward(200,200),
+		"piglin" : randomReward(1,3),
+		"zoglin" : randomReward(2,5),
+		"player" : randomReward(1,1)
+	};
+
 	const {
 		entity: deadEntity,
 		killer
