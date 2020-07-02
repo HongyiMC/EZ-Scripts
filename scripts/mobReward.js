@@ -41,8 +41,8 @@ const mobs = {
 
 function percentage(num){
 	if (LootPercentage > 100) {
-		console.log("Please do not enter a percentage that is higher than 100")
-		let LootPercentage = 100
+		console.log("Please do not enter a percentage that is higher than 100");
+		let LootPercentage = 100;
 		return (num/100)*LootPercentage;
 	}
 	else {
@@ -61,26 +61,26 @@ system.listenForEvent("minecraft:entity_death", ({data: eventData}) => {
 	
 	if (deadEntityIdentifier in mobs) {
 		if (deadEntity.__identifier__ === "minecraft:player") {
-			let moneyOld = getBalance(killerName)
+			const moneyOld = getBalance(killerName);
 			const victim = system.getComponent(deadEntity, "minecraft:nameable").data.name;
 			const victimName = getPlayerByNAME(victim);
 			const victimMoney = getBalance(victimName);
 			const result = percentage(victimMoney);
 			const victimLoot = Math.round(result);
-			const deductVictimLoot = victimLoot * -1
-			updateBalance(killerName, victimLoot, "add")
+			const deductVictimLoot = victimLoot * -1;
+			updateBalance(killerName, victimLoot, "add");
 			system.executeCommand(`title "${killerName.name}" actionbar §fYou earned §e$${victimLoot} §a(${LootPercentage} Percent) §ffor killing §6${victimName.name}\n§7Previous: §b${moneyOld} §7=> Now: §b${getBalance(killerName)}`, () => {});
-			updateBalance(victimName, deductVictimLoot, "deduct")
-			system.executeCommand(`title "${victimName.name}" actionbar §fYou lost §e$${victimLoot} §a(${LootPercentage} Percent) §ffor getting killed by §6${victimName.name}\n§7Previous: §b${moneyOld} §7=> Now: §b${getBalance(killerName)}`, () => {});
+			updateBalance(victimName, deductVictimLoot, "deduct");
+			system.executeCommand(`tellraw @a {"rawtext":[{"text":"§6${victimName.name} §flost §e$${victimLoot} §a(${LootPercentage} Percent) §ffor getting killed by §6${killerName.name}\n§7Previous: §b${victimMoney} §7=> Now: §b${getBalance(victimName)}"}]}`, () => {});
 		}
 		else {
 			let moneyOld = getBalance(killerName)
 			updateBalance(killerName, mobs[deadEntityIdentifier], "add");
-			system.executeCommand(`title "${killerName.name}" actionbar §fYou earned §e$${mobs[deadEntityIdentifier]} §ffor killing §6${deadEntity.__identifier__}\n§7Previous: §b${moneyOld} §7=> Now: §b${getBalance(killerName)}`, () => {});
+			system.executeCommand(`title "${killerName.name}" actionbar §fYou earned §e$${mobs[deadEntityIdentifier]} §ffor killing §6${deadEntityIdentifier}\n§7Previous: §b${moneyOld} §7=> Now: §b${getBalance(killerName)}`, () => {});
 		}
 	}
 	else{
-		system.executeCommand(`title "${killerName.name}" actionbar §fYou killed §6${deadEntity.__identifier__}`, () => {});
+		system.executeCommand(`title "${killerName.name}" actionbar §fYou killed §6${deadEntityIdentifier}`, () => {});
 	}
 })
 console.log("mobReward.js loaded");
