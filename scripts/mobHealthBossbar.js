@@ -1,28 +1,40 @@
 import {
-	getPlayerByNAME
+    getPlayerByNAME
 } from "ez:player";
 
 import {
-	create
+    create
 } from "ez:bossbar";
 
 const system = server.registerSystem(0, 0);
 
-system.listenForEvent("minecraft:player_attacked_entity", ({data: eventData}) => {
-	const { 
-		player: entity,
-		attacked_entity: attackedEntity
-		
-	} = eventData
-	const health = system.getComponent(attackedEntity, "minecraft:health").data.value
-	const healthMax = system.getComponent(attackedEntity, "minecraft:health").data.max
-	const hitter = system.getComponent(entity, "minecraft:nameable").data.name;
-	const hitterName = getPlayerByNAME(hitter);
-	if (attackedEntity.__identifier__ === "minecraft:player") {
-		return 0;
+function percentage(healthNow, healthMax)
+{
+  return (healthNow/healthMax);
+}
+
+system.listenForEvent("minecraft:entity_hurt", ({data: eventData}) => {
+    const { 
+        attacker,
+        damage,
+        entity
+    } = eventData;
+    if (entity.__identifier__ === "minecraft:player") return;
+	const healthMax = system.getComponent(entity, "minecraft:health").data.max;
+	const healthBefore = system.getComponent(entity, "minecraft:health").data.value;
+	const healthNow = healthBefore - damage;
+	let healthPercentage = percentage(healthNow, healthMax);
+    const hitter = system.getComponent(attacker, "minecraft:nameable").data.name;
+    const hitterName = getPlayerByNAME(hitter);
+	const bar = create(hitterName,entity.__identifier__,healthPercentage);
+	setTimeout(() => bar.destory(), 10);
+    //console.log(hitterName.name + " hit " + entity.__identifier__, healthMax, healthBefore, damage, healthNow, healthPercentage);
+	if (healthPercentage < 0) {
+		let healthPercentage = 0
+		bar
 	}
 	else {
-		console.log(hitter + " hit " + attackedEntity.__identifier__, health, healthMax)
+		bar
 	}
 })
 console.log("mobHealthBossbar.js loaded");
