@@ -1,6 +1,7 @@
 import "./antiXray.js"
 import "./attackParticle.js"
 import "./bossbar.js"
+import "./bowDing.js"
 import "./chatCMD.js"
 import "./fun.js"
 import "./mobHealthBossbar.js"
