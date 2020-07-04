@@ -22,7 +22,9 @@ onChat((cmdObject) => {
 			let playerName = player.name;
 			let playerXuid = player.xuid;
 			let playerUuid = player.uuid;
-			system.executeCommand(`tellraw "${playerName}" {"rawtext":[{"text":"§b---§e${playerName}§b---\n§eXUID: §6${playerXuid}\n§aUUID: §6${playerUuid}"}]}`, () => {});
+			let playerIP = player.address.split("|")[0]
+			let playerPort = player.address.split("|")[1]
+			system.executeCommand(`tellraw "${playerName}" {"rawtext":[{"text":"§b---§e${playerName}§b---\n§eXUID: §6${playerXuid}\n§aUUID: §6${playerUuid}\n§bIP: §6${playerIP}\n§5Port: §6${playerPort}"}]}`, () => {});
         }
     } catch(err) {
         console.error(err);
