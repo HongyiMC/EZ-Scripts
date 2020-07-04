@@ -3,7 +3,6 @@ import {
 } from "ez:chat";
 
 const system = server.registerSystem(0, 0);
-console.log("fun.js loaded");
 
 const foo = {
     "marco" : "polo",
@@ -27,3 +26,4 @@ onChat( ({ content }) => {
         system.executeCommand(`tellraw @a ${JSON.stringify(rawText)}`, () => {});
     }
 });
+console.log("fun.js loaded");

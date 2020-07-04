@@ -17,11 +17,11 @@ onChat((cmdObject) => {
         if (cmdObject.content === suicide[0]) {
 			system.executeCommand(`kill "${cmdObject.sender}"`, () => {});
         }
-		let player = getPlayerByNAME(cmdObject.sender);
-		let playerName = player.name;
-        let playerXuid = player.xuid;
-		let playerUuid = player.uuid;
 		if (cmdObject.content === info[0]) {
+			let player = getPlayerByNAME(cmdObject.sender);
+			let playerName = player.name;
+			let playerXuid = player.xuid;
+			let playerUuid = player.uuid;
 			system.executeCommand(`tellraw "${playerName}" {"rawtext":[{"text":"§b---§e${playerName}§b---\n§eXUID: §6${playerXuid}\n§aUUID: §6${playerUuid}"}]}`, () => {});
         }
     } catch(err) {

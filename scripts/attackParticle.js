@@ -1,5 +1,4 @@
 const system = server.registerSystem(0, 0);
-console.log("attackParticle.js loaded");
 
 system.listenForEvent("minecraft:player_attacked_entity", ({data: eventData}) => {
 	const { 
@@ -14,3 +13,4 @@ system.listenForEvent("minecraft:player_attacked_entity", ({data: eventData}) =>
 	particleEventData.data.entity = attackedEntity
 	system.broadcastEvent("minecraft:spawn_particle_attached_entity", particleEventData)
 })
+console.log("attackParticle.js loaded");
