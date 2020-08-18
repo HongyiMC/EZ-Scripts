@@ -32,8 +32,8 @@ registerOverride("pay", [{type: "players", name: "player", optional: false}, {ty
 		}else {
 			updateBalance(sender, -count, "deduct");
 			updateBalance(target, finalAmount, "add");
-			executeCommand("tellraw \"" + senderName + "\" {\"rawtext\":[{\"text\":\"You send " + targetName + " $" + count + "\ntax: " + taxPercentage + "% They get $" + finalAmount + "\"}]}");
-			executeCommand("tellraw \"" + targetName + "\" {\"rawtext\":[{\"text\":\"" + senderName + " send you $" + count + "\ntax: " + taxPercentage + "% you got $" + finalAmount + "\"}]}");
+			executeCommand("tellraw \"" + senderName + "\" {\"rawtext\":[{\"text\":\"§6You send §b" + targetName + " §e$" + count + "\n§atax: " + taxPercentage + "% §6They get §e$" + finalAmount + "\"}]}");
+			executeCommand("tellraw \"" + targetName + "\" {\"rawtext\":[{\"text\":\"§b" + senderName + " §6send you §e$" + count + "\n§atax: " + taxPercentage + "% §6you got §e$" + finalAmount + "\"}]}");
 		}
 	}
 });
