@@ -9,10 +9,6 @@ import {
 	registerOverride
 } from "ez:command";
 
-import {
-	getPlayerByNAME
-} from "ez:player";
-
 //edit the percentage of tax here
 let taxPercentage = 5
 //edit the least amount of money a player can send
