@@ -7,20 +7,19 @@ const system = server.registerSystem(0, 0);
 const foo = {
     "marco" : "polo",
     "lol" : "Whats so funny",
-    "Hongyi is handsome" : "He is super handsome",
-    "Hongyi is ugly" : "Your mom is ugly",
-    "Who is Candice" : "Candice d**k fit in your mouth?",
+    "hongyi is handsome" : "He is super handsome",
+    "hongyi is ugly" : "Your mom is ugly",
     "who is candice" : "Candice d**k fit in your mouth?",
-    "Who is candice" : "Candice d**k fit in your mouth?",
-    "who is Candice" : "Candice d**k fit in your mouth?",
-    "here come dat boi" : "oh sh*t waddup!"
+    "how to play" : "Use a boat to leave spawn and enjoy vanilla survival",
+    "how do i play" : "Use a boat to leave spawn and enjoy vanilla survival",
+    "hi" : "hello!"
 };
 
 onChat( ({ content }) => {
-    if (content in foo) {
+    if (content.toLowerCase() in foo) {
         const rawText = {
             rawtext : [{
-                text : "<§eInto§6CMD§r> " + foo[content]
+                text : "<§eInto§6CMD§r> " + foo[content.toLowerCase()]
             }]
         };
         system.executeCommand(`tellraw @a ${JSON.stringify(rawText)}`, () => {});
