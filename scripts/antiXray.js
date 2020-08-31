@@ -21,7 +21,7 @@ system.listenForEvent("minecraft:player_destroyed_block", ({data: eventData}) =>
 			"minecraft:nether_gold_ore": blockName
 		}
 		if (blockName in mineBlocks) {
-			system.executeCommand(`tellraw @a[tag=staff] {"rawtext":[{"text":"§3${entityName}§7 mined §f${blockName.replace("minecraft:","")}§7 at §6${Object.values(blockPosition).join(", ")}"}]}`, () => {})
+			system.executeCommand(`tellraw @a[tag=xrayAlert] {"rawtext":[{"text":"§3${entityName}§7 mined §f${blockName.replace("minecraft:","")}§7 at §6${Object.values(blockPosition).join(", ")}"}]}`, () => {})
 		}
 	}
 )
