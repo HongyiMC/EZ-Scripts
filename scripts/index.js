@@ -1,3 +1,4 @@
+import "./antiBLM.js"
 import "./antiXray.js"
 import "./attackParticle.js"
 import "./bossbar.js"
