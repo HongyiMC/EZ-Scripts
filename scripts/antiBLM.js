@@ -21,18 +21,18 @@ onChat((clown) => {
                 text : "<§eInto§6CMD§r> Yes All Lives Matter."
             }]
         };
-        if (clown.content.toLowerCase() === blm[0]) {
+        if (clown.content.toLowerCase() === alm[0]) {
 			system.executeCommand(`kill "${clown.sender}"`, () => {});
 			system.executeCommand(`tellraw @a ${JSON.stringify(rawText1)}`, () => {});
         }
-		if (clown.content.toLowerCase() === blackLivesMatter[0]) {
+		if (clown.content.toLowerCase() === alllivesmatter[0]) {
 			system.executeCommand(`kill "${clown.sender}"`, () => {});
 			system.executeCommand(`tellraw @a ${JSON.stringify(rawText1)}`, () => {});
         }
-		if (clown.content.toLowerCase() === alm[0]) {
+		if (clown.content.toLowerCase() === blm[0]) {
 			system.executeCommand(`tellraw @a ${JSON.stringify(rawText2)}`, () => {});
         }
-		if (clown.content.toLowerCase() === allLivesMatter[0]) {
+		if (clown.content.toLowerCase() === blacklivesmatter[0]) {
 			system.executeCommand(`tellraw @a ${JSON.stringify(rawText2)}`, () => {});
         }
     } catch(err) {
