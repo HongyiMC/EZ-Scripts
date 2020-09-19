@@ -13,3 +13,4 @@ system.listenForEvent("minecraft:entity_created", (eventData) => {
 		}
 	}
 )
+console.log("bannedMob.js loaded");
