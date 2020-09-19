@@ -1,6 +1,7 @@
 import "./antiBLM.js"
 import "./antiXray.js"
 import "./attackParticle.js"
+import "./bannedMob.js"
 import "./bossbar.js"
 import "./bowDing.js"
 import "./customprefix.js"
