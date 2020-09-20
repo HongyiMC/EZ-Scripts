@@ -6,7 +6,9 @@ import {
 
 registerCommand("suicide", "Commit suicide.", 0);
 registerCommand("info", "Show your connection info.", 0);
+
 registerCommand("bc", "Broadcast a message.", 1);
+registerCommand("smite", "Smite players.", 1);
 
 registerOverride("suicide", [], function () {
 	if (this.entity)
@@ -25,6 +27,13 @@ registerOverride("info", [], function () {
 
 registerOverride("bc", [{type: "string", name: "text", optional: false}], function (content) {
 	executeCommand(`tellraw @a {"rawtext":[{"text":"${content}"}]}`)
+});
+registerOverride("smite", [{type: "players", name: "player", optional: false}], function (targets) {
+	if (targets.length != 1) throw "You can only smite 1 player at a time.";
+	let smiteName = this.player.name
+	let targetName = targets[0].name;
+	executeCommand(`execute "${targetName}" ~ ~ ~ summon lightning_bolt`);
+	executeCommand(`tellraw @a {"rawtext":[{"text":"§6${targetName} §egot smited by §b${smiteName}"}]}`)
 });
 
 console.log("essentialsPlus.js loaded");
