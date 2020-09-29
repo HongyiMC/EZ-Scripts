@@ -20,12 +20,13 @@ registerOverride("top", [], function () {
 	for (var i = 1; i < testBlockNum; i++) {
 		var curBlock = system.getBlock(tickingArea, playerPosX, playerPosY + i, playerPosZ).__identifier__;
 		var nextBlock = system.getBlock(tickingArea, playerPosX, playerPosY + i + 1, playerPosZ).__identifier__;
-		if (curBlock != "minecraft:air" && nextBlock == "minecraft:air") {
+		var next2Block = system.getBlock(tickingArea, playerPosX, playerPosY + i + 2, playerPosZ).__identifier__;
+		if (curBlock != "minecraft:air" && nextBlock == "minecraft:air" && next2Block == "minecraft:air") {
 			system.executeCommand("tp @a[name=\"" + this.name + "\"] " + playerPosX + " " + (playerPosY + i + 0.38) + " " + playerPosZ, function(data) {});
 			i = testBlockNum + 1;
 		}
 		if (i == testBlockNum - 1) {
-			throw "No safe air block found in " + testBlockNum + " blocks";
+			throw "No safe air block found in " + testBlockNum + " blocks above";
 		}
 	}
 });
