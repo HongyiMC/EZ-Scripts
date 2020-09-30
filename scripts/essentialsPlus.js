@@ -58,7 +58,7 @@ registerOverride("depth", [], function () {
 			executeCommand(`tellraw "${playerName}" {"rawtext":[{"text":"§6You are §c${yDifference} §6block(s) below sea level."}]}`);
 		}else executeCommand(`tellraw "${playerName}" {"rawtext":[{"text":"§6You are at sea level."}]}`);
 	}else throw ["error, this command can only be used in game!"];
-})
+});
 
 registerOverride("bc", [{type: "string", name: "text", optional: false}], function (content) {
 	executeCommand(`tellraw @a {"rawtext":[{"text":"${content}"}]}`);
