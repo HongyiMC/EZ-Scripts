@@ -12,6 +12,7 @@ import {
 const system = server.registerSystem(0, 0);
 
 const seaLevel = 63
+let testBlockNum = 100;
 
 registerCommand("suicide", "Commit suicide.", 0);
 registerCommand("info", "Show your connection info.", 0);
@@ -20,6 +21,8 @@ registerCommand("depth", "Displays your current block depth.", 0);
 
 registerCommand("bc", "Broadcast a message.", 1);
 registerCommand("smite", "Smite players.", 1);
+registerCommand("top", "Teleport to the very top air block.", 1);
+registerCommand("down", "Teleport to the very buttom air block.", 1);
 
 registerOverride("suicide", [], function () {
 	if (this.entity) {
@@ -71,6 +74,46 @@ registerOverride("smite", [{type: "players", name: "player", optional: false}], 
 		let smiteName = this.player.name;
 		executeCommand(`tellraw @a {"rawtext":[{"text":"§6${targetName} §egot smited by §b${smiteName}"}]}`);
 	}else executeCommand(`tellraw @a {"rawtext":[{"text":"§6${targetName} §egot smited by §bServer"}]}`);
+});
+registerOverride("top", [], function () {
+	var tickingArea = system.getComponent(this.entity.vanilla, "minecraft:tick_world").data.ticking_area;
+	let playerName = this.player.name
+	let playerPos = system.getComponent(this.entity.vanilla, "minecraft:position").data;
+	let playerPosX = playerPos.x;
+	let playerPosY = Math.floor(playerPos.y);
+	let playerPosZ = playerPos.z;
+	for (var i = 1; i < testBlockNum; i++) {
+		var curBlock = system.getBlock(tickingArea, playerPosX, playerPosY + i, playerPosZ).__identifier__;
+		var nextBlock = system.getBlock(tickingArea, playerPosX, playerPosY + i + 1, playerPosZ).__identifier__;
+		var next2Block = system.getBlock(tickingArea, playerPosX, playerPosY + i + 2, playerPosZ).__identifier__;
+		if (curBlock != "minecraft:air" && nextBlock == "minecraft:air" && next2Block == "minecraft:air") {
+			system.executeCommand("tp @a[name=\"" + this.name + "\"] " + playerPosX + " " + (playerPosY + i + 1) + " " + playerPosZ, function(data) {});
+			i = testBlockNum + 1;
+		}
+		if (i == testBlockNum - 1) {
+			throw "No safe air block found in " + testBlockNum + " blocks above";
+		}
+	}
+});
+registerOverride("down", [], function () {
+	var tickingArea = system.getComponent(this.entity.vanilla, "minecraft:tick_world").data.ticking_area;
+	let playerName = this.player.name
+	let playerPos = system.getComponent(this.entity.vanilla, "minecraft:position").data;
+	let playerPosX = playerPos.x;
+	let playerPosY = Math.floor(playerPos.y);
+	let playerPosZ = playerPos.z;
+	for (var i = 2; i < testBlockNum; i++) {
+		var curBlock = system.getBlock(tickingArea, playerPosX, playerPosY - i, playerPosZ).__identifier__;
+		var nextBlock = system.getBlock(tickingArea, playerPosX, playerPosY - i + 1, playerPosZ).__identifier__;
+		var next2Block = system.getBlock(tickingArea, playerPosX, playerPosY - i + 2, playerPosZ).__identifier__;
+		if (curBlock != "minecraft:air" && nextBlock == "minecraft:air" && next2Block == "minecraft:air") {
+			system.executeCommand("tp @a[name=\"" + this.name + "\"] " + playerPosX + " " + (playerPosY - i + 1) + " " + playerPosZ, function(data) {});
+			i = testBlockNum + 1;
+		}
+		if (i == testBlockNum - 1) {
+			throw "No safe air block found in " + testBlockNum + " blocks above";
+		}
+	}
 });
 
 console.log("essentialsPlus.js loaded");
