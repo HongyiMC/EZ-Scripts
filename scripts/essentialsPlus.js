@@ -111,7 +111,7 @@ registerOverride("down", [], function () {
 			i = testBlockNum + 1;
 		}
 		if (i == testBlockNum - 1) {
-			throw "No safe air block found in " + testBlockNum + " blocks above";
+			throw "No safe air block found in " + testBlockNum + " blocks below";
 		}
 	}
 });
