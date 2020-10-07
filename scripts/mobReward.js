@@ -45,6 +45,7 @@ system.listenForEvent("minecraft:entity_death", ({data: eventData}) => {
 		"phantom" : randomReward(1,2),
 		"blaze" : randomReward(2,2),
 		"ghast" : randomReward(3,3),
+		"wither_skeleton" : randomReward(3,4),
 		"ender_dragon" : randomReward(200,200),
 		"piglin" : randomReward(1,3),
 		"zoglin" : randomReward(2,5),
@@ -53,7 +54,8 @@ system.listenForEvent("minecraft:entity_death", ({data: eventData}) => {
 
 	const {
 		entity: deadEntity,
-		killer
+		killer,
+		cause
 	} = eventData;
 	const kill = system.getComponent(killer, "minecraft:nameable").data.name;
 	const deadEntityIdentifier = deadEntity.__identifier__.replace("minecraft:", "");
@@ -73,7 +75,7 @@ system.listenForEvent("minecraft:entity_death", ({data: eventData}) => {
 			updateBalance(victimName, deductVictimLoot, "deduct");
 			system.executeCommand(`tellraw @a {"rawtext":[{"text":"§6${victimName.name} §flost §e$${victimLoot} §a(${LootPercentage} Percent) §ffor getting killed by §6${killerName.name}\n§7Previous: §b${victimMoney} §7=> Now: §b${getBalance(victimName)}"}]}`, () => {});
 		}
-		else {
+		else if (cause === "entity_attack") {
 			let moneyOld = getBalance(killerName)
 			updateBalance(killerName, mobs[deadEntityIdentifier], "add");
 			system.executeCommand(`title "${killerName.name}" actionbar §fYou earned §e$${mobs[deadEntityIdentifier]} §ffor killing §6${deadEntityIdentifier}\n§7Previous: §b${moneyOld} §7=> Now: §b${getBalance(killerName)}`, () => {});
