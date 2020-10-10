@@ -77,44 +77,48 @@ registerOverride("smite", [{type: "players", name: "player", optional: false}], 
 	}else executeCommand(`tellraw @a {"rawtext":[{"text":"§6${targetName} §egot smited by §bServer"}]}`);
 });
 registerOverride("top", [], function () {
-	var tickingArea = system.getComponent(this.entity.vanilla, "minecraft:tick_world").data.ticking_area;
-	let playerName = this.player.name
-	let playerPos = system.getComponent(this.entity.vanilla, "minecraft:position").data;
-	let playerPosX = playerPos.x;
-	let playerPosY = Math.floor(playerPos.y);
-	let playerPosZ = playerPos.z;
-	for (var i = 1; i < testBlockNum; i++) {
-		var curBlock = system.getBlock(tickingArea, playerPosX, playerPosY + i, playerPosZ).__identifier__;
-		var nextBlock = system.getBlock(tickingArea, playerPosX, playerPosY + i + 1, playerPosZ).__identifier__;
-		var next2Block = system.getBlock(tickingArea, playerPosX, playerPosY + i + 2, playerPosZ).__identifier__;
-		if (curBlock != "minecraft:air" && nextBlock == "minecraft:air" && next2Block == "minecraft:air") {
-			system.executeCommand("tp @a[name=\"" + this.name + "\"] " + playerPosX + " " + (playerPosY + i + 1) + " " + playerPosZ, function(data) {});
-			i = testBlockNum + 1;
+	if (this.player) {
+		var tickingArea = system.getComponent(this.entity.vanilla, "minecraft:tick_world").data.ticking_area;
+		let playerName = this.player.name
+		let playerPos = system.getComponent(this.entity.vanilla, "minecraft:position").data;
+		let playerPosX = playerPos.x;
+		let playerPosY = Math.floor(playerPos.y);
+		let playerPosZ = playerPos.z;
+		for (var i = 1; i < testBlockNum; i++) {
+			var curBlock = system.getBlock(tickingArea, playerPosX, playerPosY + i, playerPosZ).__identifier__;
+			var nextBlock = system.getBlock(tickingArea, playerPosX, playerPosY + i + 1, playerPosZ).__identifier__;
+			var next2Block = system.getBlock(tickingArea, playerPosX, playerPosY + i + 2, playerPosZ).__identifier__;
+			if (curBlock != "minecraft:air" && nextBlock == "minecraft:air" && next2Block == "minecraft:air") {
+				system.executeCommand("tp @a[name=\"" + this.name + "\"] " + playerPosX + " " + (playerPosY + i + 1) + " " + playerPosZ, function(data) {});
+				i = testBlockNum + 1;
+			}
+			if (i == testBlockNum - 1) {
+				throw "No safe air block found in " + testBlockNum + " blocks above";
+			}
 		}
-		if (i == testBlockNum - 1) {
-			throw "No safe air block found in " + testBlockNum + " blocks above";
-		}
-	}
+	}else throw ["error, this command can only be used in game!"];
 });
 registerOverride("down", [], function () {
-	var tickingArea = system.getComponent(this.entity.vanilla, "minecraft:tick_world").data.ticking_area;
-	let playerName = this.player.name
-	let playerPos = system.getComponent(this.entity.vanilla, "minecraft:position").data;
-	let playerPosX = playerPos.x;
-	let playerPosY = Math.floor(playerPos.y);
-	let playerPosZ = playerPos.z;
-	for (var i = 2; i < testBlockNum; i++) {
-		var curBlock = system.getBlock(tickingArea, playerPosX, playerPosY - i, playerPosZ).__identifier__;
-		var nextBlock = system.getBlock(tickingArea, playerPosX, playerPosY - i + 1, playerPosZ).__identifier__;
-		var next2Block = system.getBlock(tickingArea, playerPosX, playerPosY - i + 2, playerPosZ).__identifier__;
-		if (curBlock != "minecraft:air" && nextBlock == "minecraft:air" && next2Block == "minecraft:air") {
-			system.executeCommand("tp @a[name=\"" + this.name + "\"] " + playerPosX + " " + (playerPosY - i + 1) + " " + playerPosZ, function(data) {});
-			i = testBlockNum + 1;
+	if (this.player) {
+		var tickingArea = system.getComponent(this.entity.vanilla, "minecraft:tick_world").data.ticking_area;
+		let playerName = this.player.name
+		let playerPos = system.getComponent(this.entity.vanilla, "minecraft:position").data;
+		let playerPosX = playerPos.x;
+		let playerPosY = Math.floor(playerPos.y);
+		let playerPosZ = playerPos.z;
+		for (var i = 2; i < testBlockNum; i++) {
+			var curBlock = system.getBlock(tickingArea, playerPosX, playerPosY - i, playerPosZ).__identifier__;
+			var nextBlock = system.getBlock(tickingArea, playerPosX, playerPosY - i + 1, playerPosZ).__identifier__;
+			var next2Block = system.getBlock(tickingArea, playerPosX, playerPosY - i + 2, playerPosZ).__identifier__;
+			if (curBlock != "minecraft:air" && nextBlock == "minecraft:air" && next2Block == "minecraft:air") {
+				system.executeCommand("tp @a[name=\"" + this.name + "\"] " + playerPosX + " " + (playerPosY - i + 1) + " " + playerPosZ, function(data) {});
+				i = testBlockNum + 1;
+			}
+			if (i == testBlockNum - 1) {
+				throw "No safe air block found in " + testBlockNum + " blocks below";
+			}
 		}
-		if (i == testBlockNum - 1) {
-			throw "No safe air block found in " + testBlockNum + " blocks below";
-		}
-	}
+	}else throw ["error, this command can only be used in game!"];
 });
 registerOverride("punish", [{type: "players", name: "player", optional: false},{type: "string", name: "reason", optional: false}], function (targets,reason) {
 	if (targets.length != 1) throw "You can only punish 1 player at a time.";
