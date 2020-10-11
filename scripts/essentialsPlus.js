@@ -6,7 +6,8 @@ import {
 import {
     executeCommand,
 	registerCommand,
-	registerOverride
+	registerOverride,
+	addEnum
 } from "ez:command";
 
 const system = server.registerSystem(0, 0);
@@ -120,11 +121,18 @@ registerOverride("down", [], function () {
 		}
 	}else throw ["error, this command can only be used in game!"];
 });
-registerOverride("punish", [{type: "players", name: "player", optional: false},{type: "string", name: "reason", optional: false}], function (targets,reason) {
+addEnum("punish-type", ["ban", "kick"]);
+registerOverride("punish", [{type: "enum", enum: "punish-type", name: "type", optional: false},{type: "players", name: "player", optional: false},{type: "string", name: "reason", optional: true}], function (type,targets,reason) {
 	if (targets.length != 1) throw "You can only punish 1 player at a time.";
 	let targetName = targets[0].name;
-	executeCommand(`tellraw @a {"rawtext":[{"text":"§c${targetName} has been banned from the server.\n§bReason: §e${reason}"}]}`);
-	executeCommand(`ban "${targetName}" "§cYou have been banned from the server\n§cReason: §e${reason}"`);
+	var reason = (typeof reason === 'undefined') ? "no reason provided" : reason;
+	if (type === 0) {
+		executeCommand(`tellraw @a {"rawtext":[{"text":"§c${targetName} has been banned from the server.\n§bReason: §e${reason}"}]}`);
+		executeCommand(`ban "${targetName}" "§cYou have been banned from the server\n§cReason: §e${reason}§r`);
+	}else {
+		executeCommand(`tellraw @a {"rawtext":[{"text":"§c${targetName} has been kicked from the server.\n§bReason: §e${reason}"}]}`);
+		executeCommand(`kick "${targetName}" "§e${reason}§r"`);
+	}
 });
 
 console.log("essentialsPlus.js loaded");
