@@ -12,8 +12,12 @@ import {
 
 const system = server.registerSystem(0, 0);
 
+//define sea level
 const seaLevel = 63
+//define how many block you can tp using /top and /down
 let testBlockNum = 100;
+//most mobs can be spawned with custom summon
+const mostSpawnAmount = 50
 
 registerCommand("suicide", "Commit suicide.", 0);
 registerCommand("info", "Show your connection info.", 0);
@@ -25,6 +29,7 @@ registerCommand("smite", "Smite players.", 1);
 registerCommand("top", "Teleport to the very top air block.", 1);
 registerCommand("down", "Teleport to the very buttom air block.", 1);
 registerCommand("punish", "punish a player.", 1);
+registerCommand("summonmob", "Custom summon mobs.", 1);
 
 registerOverride("suicide", [], function () {
 	if (this.entity) {
@@ -128,10 +133,18 @@ registerOverride("punish", [{type: "enum", enum: "punish-type", name: "type", op
 	var reason = (typeof reason === 'undefined') ? "no reason provided" : reason;
 	if (type === 0) {
 		executeCommand(`tellraw @a {"rawtext":[{"text":"§c${targetName} has been banned from the server.\n§bReason: §e${reason}"}]}`);
-		executeCommand(`ban "${targetName}" "§cYou have been banned from the server\n§cReason: §e${reason}§r`);
+		executeCommand(`ban "${targetName}" "§cYou have been banned from the server\n§cReason: §e${reason}§r\n§bAppeal at discord:\n§9https://discord.gg/8YQacbq"`);
 	}else {
 		executeCommand(`tellraw @a {"rawtext":[{"text":"§c${targetName} has been kicked from the server.\n§bReason: §e${reason}"}]}`);
 		executeCommand(`kick "${targetName}" "§e${reason}§r"`);
+	}
+});
+registerOverride("summonmob", [{type: "players", name: "player", optional: false},{type: "string", name: "entityType", optional: false},{type: "int", name: "amount", optional: false},{type: "string", name: "nameTag", optional: false}], function (targets, mobType, amount, nameTag) {
+	if (amount > mostSpawnAmount) throw "That is way too much to spawn.";
+	if (targets.length != 1) throw "You can only spawn mobs for 1 player at a time.";
+	let playerName = targets[0].name;
+	for (var i = 0; i < amount; i++) {
+		executeCommand(`execute "${playerName}" ~ ~ ~ summon ${mobType} ${nameTag}`);
 	}
 });
 
