@@ -133,7 +133,7 @@ registerOverride("punish", [{type: "enum", enum: "punish-type", name: "type", op
 	var reason = (typeof reason === 'undefined') ? "no reason provided" : reason;
 	if (type === 0) {
 		executeCommand(`tellraw @a {"rawtext":[{"text":"§c${targetName} has been banned from the server.\n§bReason: §e${reason}"}]}`);
-		executeCommand(`ban "${targetName}" "§cYou have been banned from the server\n§cReason: §e${reason}§r\n§bAppeal at discord:\n§9https://discord.gg/8YQacbq"`);
+		executeCommand(`ban "${targetName}" "§cYou have been banned from the server\n§cReason: §e${reason}§r"`);
 	}else {
 		executeCommand(`tellraw @a {"rawtext":[{"text":"§c${targetName} has been kicked from the server.\n§bReason: §e${reason}"}]}`);
 		executeCommand(`kick "${targetName}" "§e${reason}§r"`);
