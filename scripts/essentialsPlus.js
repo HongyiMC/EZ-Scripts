@@ -79,8 +79,8 @@ registerOverride("smite", [{type: "players", name: "player", optional: false}], 
 	executeCommand(`execute "${targetName}" ~ ~ ~ summon lightning_bolt`);
 	if (this.player) {
 		let smiteName = this.player.name;
-		executeCommand(`tellraw @a {"rawtext":[{"text":"§6${targetName} §egot smited by §b${smiteName}"}]}`);
-	}else executeCommand(`tellraw @a {"rawtext":[{"text":"§6${targetName} §egot smited by §bServer"}]}`);
+		executeCommand(`tellraw @a {"rawtext":[{"text":"§6${targetName} §egot smote by §b${smiteName}"}]}`);
+	}else executeCommand(`tellraw @a {"rawtext":[{"text":"§6${targetName} §egot smote by §bServer"}]}`);
 });
 registerOverride("top", [], function () {
 	if (this.player) {
