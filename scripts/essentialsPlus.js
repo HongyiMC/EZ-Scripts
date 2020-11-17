@@ -29,7 +29,9 @@ registerCommand("smite", "Smite players.", 1);
 registerCommand("top", "Teleport to the very top air block.", 1);
 registerCommand("down", "Teleport to the very buttom air block.", 1);
 registerCommand("punish", "punish a player.", 1);
-registerCommand("summonmob", "Custom summon mobs.", 1);
+registerCommand("spawnmob", "Spawns a mob.", 1);
+registerCommand("gmc", "Change player gamemode.", 1);
+registerCommand("gms", "Change player gamemode.", 1);
 
 registerOverride("suicide", [], function () {
 	if (this.entity) {
@@ -139,7 +141,7 @@ registerOverride("punish", [{type: "enum", enum: "punish-type", name: "type", op
 		executeCommand(`kick "${targetName}" "§e${reason}§r"`);
 	}
 });
-registerOverride("summonmob", [{type: "players", name: "player", optional: false},{type: "string", name: "entityType", optional: false},{type: "int", name: "amount", optional: false},{type: "string", name: "nameTag", optional: false}], function (targets, mobType, amount, nameTag) {
+registerOverride("spawnmob", [{type: "players", name: "player", optional: false},{type: "string", name: "entityType", optional: false},{type: "int", name: "amount", optional: false},{type: "string", name: "nameTag", optional: false}], function (targets, mobType, amount, nameTag) {
 	if (amount > mostSpawnAmount) throw "That is way too much to spawn.";
 	if (targets.length != 1) throw "You can only spawn mobs for 1 player at a time.";
 	let playerName = targets[0].name;
@@ -147,5 +149,17 @@ registerOverride("summonmob", [{type: "players", name: "player", optional: false
 		executeCommand(`execute "${playerName}" ~ ~ ~ summon ${mobType} ${nameTag}`);
 	}
 });
+registerOverride("gmc", [], function () {
+	if (this.player) {
+		let playerName = this.player.name;
+		executeCommand(`gamemode 1 ${playerName}`);
+	}
+})
+registerOverride("gms", [], function () {
+	if (this.player) {
+		let playerName = this.player.name;
+		executeCommand(`gamemode 0 ${playerName}`);
+	}
+})
 
 console.log("essentialsPlus.js loaded");
