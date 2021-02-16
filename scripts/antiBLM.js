@@ -21,7 +21,7 @@ onChat((clown) => {
                 text : "<§eInto§6CMD§r> Yes All Lives Matter."
             }]
         };
-        if (clown.content.replace(/[^\w\t\r\n!?]/g,'').toLowerCase().includes(blm)) {
+        if (clown.content.replace(/[^\w\t\r\n!?]/g,'').toLowerCase().includes(blm[0])) {
 			system.executeCommand(`kill "${clown.sender}"`, () => {});
 			system.executeCommand(`tellraw @a ${JSON.stringify(rawText1)}`, () => {});
         }
