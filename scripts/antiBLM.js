@@ -4,10 +4,10 @@ import {
 
 const system = server.registerSystem(0, 0);
 
-let blm = ['blm'];
-let blackLivesMatter = ['black lives matter'];
-let alm = ['alm'];
-let allLivesMatter = ['all lives matter'];
+const blm = ['blm'];
+const blackLivesMatter = ['blacklivesmatter'];
+const alm = ['alm'];
+const allLivesMatter = ['alllivesmatter'];
 
 onChat((clown) => {
     try {
@@ -21,18 +21,18 @@ onChat((clown) => {
                 text : "<§eInto§6CMD§r> Yes All Lives Matter."
             }]
         };
-        if (clown.content.toLowerCase() === blm[0]) {
+        if (clown.content.replace(/[^\w\t\r\n!?]/g,'').toLowerCase().includes(blm)) {
 			system.executeCommand(`kill "${clown.sender}"`, () => {});
 			system.executeCommand(`tellraw @a ${JSON.stringify(rawText1)}`, () => {});
         }
-		if (clown.content.toLowerCase() === blackLivesMatter[0]) {
+		if (clown.content.replace(/[^\w\t\r\n!?]/g,'').toLowerCase().includes(blackLivesMatter[0])) {
 			system.executeCommand(`kill "${clown.sender}"`, () => {});
 			system.executeCommand(`tellraw @a ${JSON.stringify(rawText1)}`, () => {});
         }
-		if (clown.content.toLowerCase() === alm[0]) {
+		if (clown.content.replace(/[^\w\t\r\n!?]/g,'').toLowerCase().includes(alm[0])) {
 			system.executeCommand(`tellraw @a ${JSON.stringify(rawText2)}`, () => {});
         }
-		if (clown.content.toLowerCase() === allLivesMatter[0]) {
+		if (clown.content.replace(/[^\w\t\r\n!?]/g,'').toLowerCase().includes(allLivesMatter[0])) {
 			system.executeCommand(`tellraw @a ${JSON.stringify(rawText2)}`, () => {});
         }
     } catch(err) {
